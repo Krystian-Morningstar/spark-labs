@@ -15,6 +15,10 @@ jobs:
   spark:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  
+      
     steps:
     - uses: actions/checkout@v4
     #- run: ls -la 
@@ -34,6 +38,15 @@ jobs:
     - run: spark-submit --version
     - run: spark-submit --master local hello.py
     - run: ls -la
-
-    
+      
+    - name: GIT commit and push results
+      env:
+        CI_COMMIT_MESSAGE: "save spark results"
+        CI_COMMIT_AUTHOR: "Krystian-Morningstar"
+      run: |
+        git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+        git config --global user.email "zS21004519@estudiantes.uv.mx"
+        git add results
+        git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
+        git push
 
