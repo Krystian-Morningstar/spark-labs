@@ -14,11 +14,18 @@ if __name__ == "__main__":
     # Crear vista temporal
     df_games.createOrReplaceTempView("games")
     
-    # Filtrar solo los títulos de juegos para consolas PlayStation y Xbox
-    query = """
+    popular_games = [
+        "The Last of Us Part II", "God of War", "Spider-Man", 
+        "Uncharted 4: A Thief's End", "Gran Turismo 7",
+        "Halo: The Master Chief Collection", "Forza Horizon 4", 
+        "Gears 5", "Minecraft", "Sea of Thieves"
+    ]
+    
+    # Filtrar juegos populares de PS y Xbox
+    query = f"""
         SELECT title, console
         FROM games
-        WHERE console LIKE 'PS%' OR console LIKE 'XBOX%'
+        WHERE title IN {tuple(popular_games)}
         ORDER BY console ASC
     """
     df_filtered = spark.sql(query)
