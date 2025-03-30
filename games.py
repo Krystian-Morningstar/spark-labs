@@ -14,18 +14,20 @@ if __name__ == "__main__":
     # Crear vista temporal
     df_games.createOrReplaceTempView("games")
     
-    # Filtrar solo la columna 'title' y ordenar por 'console' alfabéticamente
+    # Filtrar solo los títulos de juegos para consolas PlayStation y Xbox
     query = """
         SELECT title, console
         FROM games
+        WHERE console LIKE 'PS%' OR console LIKE 'XBOX%'
         ORDER BY console ASC
     """
     df_filtered = spark.sql(query)
     
-    # Mostrar resultados
+    # Mostrar algunos resultados
     df_filtered.show(20)
     
+    # Guardar los resultados en formato JSON
     df_filtered.write.mode("overwrite").json("results/video_game_sales")
-    
+
     # Cerrar sesión de Spark
     spark.stop()
