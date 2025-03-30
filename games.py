@@ -8,7 +8,7 @@ if __name__ == "__main__":
         .getOrCreate()
     
     # Cargar el dataset
-    path_games = "video_game_sales.csv"  # Asegúrate de que el archivo esté en la ruta correcta
+    path_games = "dataset.csv"  # Asegúrate de que el archivo esté en la ruta correcta
     df_games = spark.read.csv(path_games, header=True, inferSchema=True)
     
     # Crear vista temporal
