@@ -8,7 +8,7 @@ if __name__ == "__main__":
         .getOrCreate()
     
     # Cargar el dataset
-    path_games = "dataset.csv"  # Asegúrate de que el archivo esté en la ruta correcta
+    path_games = "dataset.csv"
     df_games = spark.read.csv(path_games, header=True, inferSchema=True)
     
     # Crear vista temporal
@@ -24,6 +24,8 @@ if __name__ == "__main__":
     
     # Mostrar resultados
     df_filtered.show(20)
+    
+    df_filtered.write.mode("overwrite").json("results/video_game_sales")
     
     # Cerrar sesión de Spark
     spark.stop()
